@@ -1,0 +1,27 @@
+version: '3'
+
+services:
+  backend:
+    build: ./backend
+    user: root
+    command: sh -c "yarn install && yarn start"
+    environment:
+      - NODE_ENV=development
+      - PORT=7000
+    ports:
+      - '7000:7000'
+    working_dir: /backend
+    volumes:
+      - ./backend:/backend:cached
+
+  frontend:
+    image: node:12.3-alpine
+    command: sh -c "yarn install && yarn run start"
+    environment:
+      - NODE_ENV=development
+      - PORT=3000
+    ports:
+      - '3000:3000'
+    working_dir: /frontend
+    volumes:
+      - ./frontend:/frontend:cached
